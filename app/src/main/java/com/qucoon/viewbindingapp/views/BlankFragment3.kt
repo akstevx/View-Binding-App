@@ -41,27 +41,19 @@ class BlankFragment3 : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.gameListener.observeChange(viewLifecycleOwner){
-            if (it != ""){
-                viewModel.nameListener.value = "Welcome back '$it'"
-                mFragmentNavigation.pushFragment(BlankFragment())
-            } else  Toast.makeText(context, "Both fields are required to proceed", Toast.LENGTH_LONG).show()
+            viewModel.nameListener.value = "Welcome to first game '$it'"
+            mFragmentNavigation.pushFragment(BlankFragment())
         }
 
         viewModel.moveToNextGameListener.observeChange(viewLifecycleOwner){
-            viewModel.clearListener.value = "Welcome"
+            viewModel.clearListener.value = "Welcome to next game '$it'"
             mFragmentNavigation.pushFragment(BlankFragment2())
         }
 
-        viewModel.userNameListener.observeChange(viewLifecycleOwner){
+        viewModel.errorListener.observeChange(viewLifecycleOwner){
             Toast.makeText(context, it, Toast.LENGTH_LONG).show()
         }
-
     }
 
-//    override fun onDestroy() {
-//        fragmentBlankBinding = null
-//        super.onDestroy()
-//
-//    }
 
 }

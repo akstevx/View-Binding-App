@@ -6,7 +6,6 @@ import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import dmax.dialog.SpotsDialog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -18,11 +17,9 @@ import kotlin.coroutines.CoroutineContext
 open class BaseFragment : Fragment(), CoroutineScope {
 
 
-     //val backgroundRepository:BackgroundWorkRepository by inject()
     lateinit var mFragmentNavigation: FragmentNavigation
     lateinit  var alertDialog: AlertDialog
     val paperPrefs: PaperPrefs by inject()
-
 
     val backgroudJobs =  Job()
     override val coroutineContext: CoroutineContext
@@ -35,24 +32,10 @@ open class BaseFragment : Fragment(), CoroutineScope {
         setHasOptionsMenu(true)
     }
 
-
-
-
-//    fun isAccountApproved():Boolean{
-//        return paperPrefs.parentalApprovalStatus() == ParentApproveStatus.APPROVED
-//    }
-
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is FragmentNavigation) {
             mFragmentNavigation = context
-            alertDialog = SpotsDialog.Builder()
-                    .setContext(context)
-                    .setMessage("Loading...")
-                    .setCancelable(false)
-                    .build()
-
         }
     }
 
@@ -80,32 +63,6 @@ open class BaseFragment : Fragment(), CoroutineScope {
 
         }
     }
-//    fun showloadingDialog(show:Boolean){
-//        if(show){
-//            alertDialog.show()
-//        } else {
-//            alertDialog.hide()
-//
-//        }
-//
-//    }
-
-//
-//    fun setUpObservers(viewModel: BaseViewModel){
-//        setUpErrorHandler(viewModel)
-//        setUpLoading(viewModel)
-//    }
-//
-//    fun setUpErrorHandler(viewModel: BaseViewModel){
-//        viewModel.showError.observeChange(this){showError(it)}
-//    }
-//
-//    fun setUpErrorHandler(viewModel: BaseViewModel, action:()->Unit){
-//        viewModel.showError.observeChange(this){
-//            action()
-//            //showError(it)
-//        }
-//    }
 
 
 //    fun setUpLoading(viewModel: BaseViewModel){

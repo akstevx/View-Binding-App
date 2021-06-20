@@ -1,11 +1,7 @@
-package com.example.hycharge.utils;
+package com.qucoon.viewbindingapp.utils;
 
 import android.app.Activity
-import android.content.Context
 import android.database.Cursor
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
 import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
@@ -19,13 +15,6 @@ import androidx.annotation.DrawableRes
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.transition.Transition
-import com.bumptech.glide.signature.ObjectKey
-import com.google.android.material.chip.Chip
 import timber.log.Timber
 import java.io.File
 import java.text.DecimalFormat
@@ -112,14 +101,6 @@ fun String.normalcase(): String{
     return this.toLowerCase().capitalize()
 }
 
-//fun ImageView.loadImage2(fullImageUrl: String, defaultImage:Int, view: ProvidersAdaptor) {
-//
-//    val requestOptions = RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL)
-//    Glide.with(context).load(fullImageUrl).apply(requestOptions).error(defaultImage).into(this)
-//}
-
-
-
 fun String.toDateUpdate(): Date {
     val targetFormat = SimpleDateFormat("yyyy-MM-dd")
     return  targetFormat.parse(this)
@@ -148,8 +129,6 @@ fun String.toDate(): Date {
 }
 
 
-
-
 fun Matcher.findAndPrint(){
     while (this.find()){
         Timber.i(this.group())
@@ -176,178 +155,26 @@ fun RecyclerView.Adapter<*>?.reloadRecycler(){
     this?.notifyDataSetChanged()
 }
 
-fun ImageView.loadImage(fullImageUrl: String, defaultImage:Int, view: Fragment) {
-    Glide.with(view)
-        .load(fullImageUrl)
-        .signature(ObjectKey(System.currentTimeMillis().toString()))
-        .error(defaultImage)
-        .into(this)
-}
-
-
-//fun ImageView.loadProfileImage(view: Fragment,paperPrefs: PaperPrefs){
-//    this.loadImage("${Constants.BUCKETURL}${paperPrefs.getPhoneNumber()}_profilePic.png",
-//        R.drawable.default_profile_image,view)
-//}
-
-fun ImageView.loadImage(fullImageUrl: String, defaultImage:Int, view: Context) {
-    val requestOption = RequestOptions()
-        .signature(ObjectKey(System.currentTimeMillis().toString()))
-        .placeholder(defaultImage).centerCrop()
-    Glide.with(view).load(fullImageUrl)
-        .dontAnimate()
-        .diskCacheStrategy(DiskCacheStrategy.ALL)
-        .apply(requestOption)
-        .error(defaultImage)
-        .into(this)
-    val requestOptions = RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL)
-    Glide.with(view).load(fullImageUrl).apply(requestOptions).error(defaultImage).into(this)
-}
-
-
-fun loadImage(context: Context,imagePath:String,imageView: ImageView){
-    Glide.with(context)
-        .asBitmap()
-        .load(imagePath)
-        .into(object : CustomTarget<Bitmap>(){
-            override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                imageView.setImageBitmap(resource)
-            }
-            override fun onLoadCleared(placeholder: Drawable?) {
-                // this is called when imageView is cleared on lifecycle call or for
-                // some other reason.
-                // if you are referencing the bitmap somewhere else too other than this imageView
-                // clear it here as you can no longer have the bitmap
-            }
-        })
-}
-fun getCategoryImage(tag:String):String{
-    return "https://veezah.s3.amazonaws.com/drawable-xxxhdpi/${tag}.png"
-}
-fun loadChip(context: Context,imagePath:String,chip: Chip){
-    Glide.with(context)
-        .asBitmap()
-        .load(imagePath)
-//        .error(R.drawable.defaultbanklogo)
-        .into(object : CustomTarget<Bitmap>(){
-            override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                chip.chipIcon = BitmapDrawable(context.resources,resource)
-
-            }
-            override fun onLoadCleared(placeholder: Drawable?) {
-                // this is called when imageView is cleared on lifecycle call or for
-                // some other reason.
-                // if you are referencing the bitmap somewhere else too other than this imageView
-                // clear it here as you can no longer have the bitmap
-            }
-        })
-}
 fun View.show(){this.visibility = View.VISIBLE}
 fun View.invisible(){this.visibility = View.INVISIBLE}
 
-fun EditText.getString():String{
-    return this.text.toString()
-}
-fun String.formatNumber():String{
-    return try {
-        "₦${DecimalFormat("#,##0.00").format(java.lang.Double.parseDouble(this.stripAmount()))}"
-    } catch (ex:java.lang.Exception){
-        "₦0.00"
-    }
-}
-
-fun String.formatNumberr():String{
-    return try {
-        "₦${DecimalFormat("#,##.00").format(java.lang.Double.parseDouble(this.stripAmount()))}"
-    } catch (ex:java.lang.Exception){
-        "₦0.00"
-    }
-}
 
 fun String.normalCase():String{
     return this.toLowerCase().capitalize()
 }
 
-fun String.formatNumberOnly():String{
+
+fun tryAction(action:()->Unit){
     return try {
-        "${DecimalFormat("#,##0.00").format(java.lang.Double.parseDouble(this.stripAmount()))}"
-    } catch (ex:java.lang.Exception){
-        "0.00"
-    }
-}
-fun String.stripAmount():String{
-    return this.toString().replace("[$,£N₦[a-zA-Z]]".toRegex(), "")
-}
-
-fun Double.formatNumber():String{
-    return "₦${DecimalFormat("#,##0.00").format(this)}"
-}
-fun ViewPager.onPageChange(action:(position:Int)-> Unit){
-    this.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-        override fun onPageScrollStateChanged(state: Int) {
-
-        }
-
-        override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-
-        }
-
-        override fun onPageSelected(position: Int) {
-            action(position)
-        }
-
-    })
-}
-
-fun abbreviate(firstInit:String):String{
-    if(firstInit.isNullOrBlank()){
-        return ""
-    }
-    return "${firstInit[0].toUpperCase()}"
-}
-
-fun String.capitalizeWords(): String = split(" ").joinToString(" ") { it.toLowerCase().capitalize() }
-
-fun Date.toDateString(targetFormart: String): String {
-    val sdf = SimpleDateFormat(targetFormart)
-    val calendar = Calendar.getInstance()
-    calendar.time = this
-    return sdf.format(calendar.time)
-}
-
-fun DatePicker.getDate(dateFormat:String):String{
-    val day = this.dayOfMonth
-    val month: Int = this.month
-    val year: Int = this.year
-    val calendar = Calendar.getInstance()
-    calendar[year, month] = day
-    val date =  calendar.time
-    return date.toDateString(dateFormat)
-}
-
-fun DatePicker.setToTodayDate(){
-    val c = Calendar.getInstance()
-    val year = c.get(Calendar.YEAR)
-    val  month = c.get(Calendar.MONTH)
-    val day = c.get(Calendar.DAY_OF_MONTH)
-    this.updateDate(year,month,day)
-}
-
-fun ImageView.setDrawableImage(@DrawableRes resource: Int, applyCircle: Boolean = false) {
-    val glide = Glide.with(this).load(resource)
-    if (applyCircle) {
-        glide.apply(RequestOptions.circleCropTransform()).into(this)
-    } else {
-        glide.into(this)
+        action()
+    }catch (ex:Exception){
+        Timber.e(ex)
     }
 }
 
-fun ImageView.setLocalImage(file: File, applyCircle: Boolean = false) {
-    val glide = Glide.with(this).load(file)
-    if (applyCircle) {
-        glide.apply(RequestOptions.circleCropTransform()).into(this)
-    } else {
-        glide.into(this)
-    }
-}
+
+
+
+
+
 

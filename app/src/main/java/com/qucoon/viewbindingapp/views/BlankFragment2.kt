@@ -12,10 +12,10 @@ import com.qucoon.viewbindingapp.base.BaseFragment
 import com.qucoon.viewbindingapp.base.observeChange
 import com.qucoon.viewbindingapp.databinding.FragmentBlank2Binding
 import com.qucoon.viewbindingapp.viewmodel.BindingViewModel
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 class BlankFragment2 : BaseFragment() {
-    private val viewModel: BindingViewModel by viewModel()
+    private val viewModel: BindingViewModel by sharedViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

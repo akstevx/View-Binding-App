@@ -107,7 +107,7 @@
             android:layout_height="wrap_content"
             android:background="@color/space_transparent"
             android:elevation="0dp"
-            android:onClick="@{()-> bindingViewModel.moveToNextGame()}"
+            android:onClick="@{()-> bindingViewModel.moveToNextGame(etUsername.getText().toString(), etPassword.getText().toString())}"
             android:text="Play Next Game"
             android:textAllCaps="false"
             android:textColor="#305DAA"

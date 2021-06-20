@@ -11,7 +11,7 @@ import com.ncapdevi.fragnav.FragNavController
 import com.ncapdevi.fragnav.FragNavLogger
 import com.ncapdevi.fragnav.FragNavTransactionOptions
 import com.qucoon.viewbindingapp.R
-import com.qucoon.viewbindingapp.utils.Utils.tryAction
+import com.qucoon.viewbindingapp.utils.tryAction
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
