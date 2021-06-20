@@ -44,9 +44,12 @@ class BlankFragment3 : BaseFragment() {
             if (it != ""){
                 viewModel.nameListener.value = "Welcome back '$it'"
                 mFragmentNavigation.pushFragment(BlankFragment())
-            } else {
-                Toast.makeText(context, "Both fields are required to proceed", Toast.LENGTH_LONG).show()
-            }
+            } else  Toast.makeText(context, "Both fields are required to proceed", Toast.LENGTH_LONG).show()
+        }
+
+        viewModel.moveToNextGameListener.observeChange(viewLifecycleOwner){
+            viewModel.clearListener.value = "Welcome"
+            mFragmentNavigation.pushFragment(BlankFragment2())
         }
 
         viewModel.userNameListener.observeChange(viewLifecycleOwner){

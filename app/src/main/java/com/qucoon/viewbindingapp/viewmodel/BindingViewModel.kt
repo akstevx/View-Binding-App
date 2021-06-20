@@ -9,6 +9,7 @@ class BindingViewModel: BaseViewModel()  {
     val nameListener =  SingleLiveEvent<String>()
     val userNameListener =  SingleLiveEvent<String>()
     val gameListener =  SingleLiveEvent<String>()
+    val moveToNextGameListener =  SingleLiveEvent<String>()
     val lengthOfThoughtsListener = SingleLiveEvent<String>()
     val clearListener =  SingleLiveEvent<String>()
 
@@ -68,6 +69,10 @@ class BindingViewModel: BaseViewModel()  {
         if (firstName.isNotEmpty() && lastName.isNotEmpty()) {
             gameListener.value = "$firstName $lastName"
         } else gameListener.value = ""
+    }
+
+    fun moveToNextGame(){
+        moveToNextGameListener.value = "move"
     }
 
 }
